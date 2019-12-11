@@ -20,32 +20,20 @@ var people = [
 					var subject = message.getSubject();
 					var nadawca = message.getFrom();
 				  
-					// Sprawdzenie, czy wiadomość była już forwardowana
 					if (message.getReplyTo() == '') {
-						// Forwardowanie wiadomości - jako replyTo przekazujemy nadawcę
 						message.forward(people[counter] + domain, {replyTo: nadawca, subject: subject});
 					}
 					else {
-						// Forwardowanie wiadomości - jako replyTo przekazujemy dotychczasowe replyTo
 						message.forward(people[counter] + domain, {replyTo: message.getReplyTo(), subject: subject});
 					}
 				
 				
-				// Dodanie nowej etykiety archiwum wiadomości
 				var newlabel = GmailApp.getUserLabelByName(label_after_forward + '/' + people[counter]);
 				threads[i].addLabel(newlabel);
 				
-				// Oznaczenie jako przeczytane
 				threads[i].markRead();
 				
-				// Usunięcie starej etykiety
 				threads[i].removeLabel(label);
-				
-				// Logowanie wykonanych czynności
-				//Logger.log ("Forward: " + people[counter] + " ( " + subject + " ::: " + nadawca + " )");
-				}
-				else {
-				//Logger.log("Znalazłem odczytaną wiadomość: " + people[counter] + " -> " + message.getSubject());
 				}
 			}
 		}
