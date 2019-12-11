@@ -18,10 +18,10 @@ var people = [
 				
 				if (message.isUnread() == true) {
 					var subject = message.getSubject();
-					var nadawca = message.getFrom();
+					var sender = message.getFrom();
 				  
 					if (message.getReplyTo() == '') {
-						message.forward(people[counter] + domain, {replyTo: nadawca, subject: subject});
+						message.forward(people[counter] + domain, {replyTo: sender, subject: subject});
 					}
 					else {
 						message.forward(people[counter] + domain, {replyTo: message.getReplyTo(), subject: subject});
