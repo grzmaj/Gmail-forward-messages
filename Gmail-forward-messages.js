@@ -19,12 +19,29 @@ var people = [
 				if (message.isUnread() == true) {
 					var subject = message.getSubject();
 					var sender = message.getFrom();
+					
+					var body = message.getBody();
+					if (subject.length > 100) {
+						var set_new_body = true;
+						var new_body = subject + "<br><br>" + message.getBody();
+						var subject = subject.substring(0, 100) + " (...)";
+					}						
 				  
 					if (message.getReplyTo() == '') {
-						message.forward(people[counter] + domain, {replyTo: sender, subject: subject});
+						if (set_new_body == true) {
+							message.forward(people[counter] + domain, {replyTo: sender, subject: subject, htmlBody: new_body});
+						}
+						else {
+							message.forward(people[counter] + domain, {replyTo: sender, subject: subject});
+						}
 					}
 					else {
-						message.forward(people[counter] + domain, {replyTo: message.getReplyTo(), subject: subject});
+						if (set_new_body == true) {
+							message.forward(people[counter] + domain, {replyTo: message.getReplyTo(), subject: subject, htmlBody: new_body});
+						}
+						else {
+							message.forward(people[counter] + domain, {replyTo: message.getReplyTo(), subject: subject});
+						}
 					}
 				
 				
