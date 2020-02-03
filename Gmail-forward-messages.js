@@ -20,6 +20,7 @@ var people = [
 					var subject = message.getSubject();
 					var sender = message.getFrom();
 					
+					// Sprawdzamy, czy temat wiadomości nie jest za długi
 					var body = message.getBody();
 					if (subject.length > 100) {
 						var set_new_body = true;
@@ -34,6 +35,7 @@ var people = [
 						else {
 							message.forward(people[counter] + domain, {replyTo: sender, subject: subject});
 						}
+						set_new_body = false
 					}
 					else {
 						if (set_new_body == true) {
@@ -42,6 +44,8 @@ var people = [
 						else {
 							message.forward(people[counter] + domain, {replyTo: message.getReplyTo(), subject: subject});
 						}
+						set_new_body = false
+						
 					}
 				
 				
